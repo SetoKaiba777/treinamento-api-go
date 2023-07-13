@@ -10,6 +10,7 @@ var (
 	ErrDateBeforeToday   = errors.New("payment date must be today")
 	ErrInsuficentBalance = errors.New("insuficient balance")
 	ErrFraud             = errors.New("fraudulent transaction")
+	ErrPaymentNotFound   = errors.New("payment not found")
 )
 
 type Payment struct {
@@ -59,7 +60,7 @@ func (p *Payment) validation() error {
 	if p.PaymentDate.Before(today) {
 		return ErrDateBeforeToday
 	}
-	if err:= PaymentStatus(p.Status).fromString(); err != nil{
+	if err := PaymentStatus(p.Status).fromString(); err != nil {
 		return ErrInvalidStatus
 	}
 	return nil

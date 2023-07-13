@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"payments-go/core/gateway"
@@ -22,12 +23,20 @@ func TestSendNotifyUseCase(t *testing.T) {
 			},
 			expectedError: nil,
 		},
+		{
+			name: "Error to send msg",
+			input: DummyPayment(),
+			mockedHttpResponse: &http.Response{
+				StatusCode: 500,
+			},
+			expectedError: errors.New("generic error"),
+		},
 	}
 	for _, scenario := range tt {
 		t.Run(scenario.name, func(t *testing.T) {
 			fmt.Println("Scenario:", scenario.name)
 			hcMock := &HtttpClientMock{}
-			hcMock.On("Do", mock.Anything).Return(gateway.Response{Resp: *scenario.mockedHttpResponse, Err: nil})
+			hcMock.On("Do", mock.Anything).Return(gateway.Response{Resp: *scenario.mockedHttpResponse, Err: scenario.expectedError})
 			uc := NewSendNotificationUseCase(hcMock)
 			err := uc.Execute(context.TODO(), scenario.input.(input.CreatePaymentInput))
 			hcMock.AssertNumberOfCalls(t, "Do", 1)

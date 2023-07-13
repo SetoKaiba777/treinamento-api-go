@@ -30,11 +30,20 @@ type (
 		expectedError            error
 	}
 
+	GetTableTest struct {
+		name           string
+		input          any
+		output         any
+		mockedResponse any
+		mockedError error
+		expectedError  error
+	}
+
 	HtttpClientMock struct {
 		mock.Mock
 	}
 
-	PaymentRepositoryMock struct{
+	PaymentRepositoryMock struct {
 		mock.Mock
 	}
 )
@@ -44,16 +53,15 @@ func (hm *HtttpClientMock) Do(method, target string, httpHeaders http.Header, ht
 	return args.Get(0).(gateway.Response)
 }
 
-func (r *PaymentRepositoryMock) Save(ctx context.Context, payment domain.Payment) (domain.Payment, error){
+func (r *PaymentRepositoryMock) Save(ctx context.Context, payment domain.Payment) (domain.Payment, error) {
 	args := r.Called()
 	return args.Get(0).(domain.Payment), args.Error(1)
 }
 
-func (r *PaymentRepositoryMock) FindById(ctx context.Context, id string) (domain.Payment, error){
+func (r *PaymentRepositoryMock) FindById(ctx context.Context, id string) (domain.Payment, error) {
 	args := r.Called()
 	return args.Get(0).(domain.Payment), args.Error(1)
 }
-
 
 func DummyPayment() input.CreatePaymentInput {
 	return input.CreatePaymentInput{
