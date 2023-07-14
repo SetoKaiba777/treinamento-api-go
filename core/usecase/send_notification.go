@@ -8,6 +8,7 @@ import (
 	"payments-go/core/domain"
 	"payments-go/core/gateway"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 )
 
 const (
@@ -29,7 +30,9 @@ func NewSendNotificationUseCase(httpClient gateway.HttpClient) SendNotificationU
 }
 
 func (sn * sendNotificationUseCase) Execute(ctx context.Context, i input.CreatePaymentInput) error{
-
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("send notification usecase init")
 	payment, err := domain.NewPayment().
 						   WithId(i.Id).
 						   WithPaymentDate(i.PaymentDate).
@@ -49,6 +52,8 @@ func (sn * sendNotificationUseCase) Execute(ctx context.Context, i input.CreateP
 	if resp.Err != nil{
 		return resp.Err
 	}
-
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("send notification usecase finish")
 	return nil
 }

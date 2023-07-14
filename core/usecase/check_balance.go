@@ -7,6 +7,7 @@ import (
 	"payments-go/core/domain"
 	"payments-go/core/gateway"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 )
 
 const (
@@ -29,6 +30,10 @@ func NewCheckBalanceUseCase(httpClient gateway.HttpClient) CheckBalanceUseCase {
 }
 
 func (c *checkBalanceUseCase) Execute(ctx context.Context, i input.CreatePaymentInput) error {
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("check payment usecase init")
+	
 	resp := c.httpClient.Do(methodBalance, targetBalance, nil, new(bytes.Buffer))
 	if resp.Err != nil {
 		return resp.Err
@@ -53,5 +58,8 @@ func (c *checkBalanceUseCase) Execute(ctx context.Context, i input.CreatePayment
 	if err != nil {
 		return err
 	}
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("check payment usecase finish")
 	return nil
 }

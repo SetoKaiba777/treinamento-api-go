@@ -5,6 +5,7 @@ import (
 	"payments-go/core/domain"
 	"payments-go/core/repository"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 )
 
 
@@ -22,6 +23,9 @@ func NewSavePaymentsUseCase(repository repository.PaymentsRepository) SavePaymen
 }
 
 func (s * savePaymentsUseCase) Execute(ctx context.Context, i input.CreatePaymentInput) error{
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("save payment usecase init")
 	payment, err := domain.NewPayment().
 						   WithId(i.Id).
 						   WithPaymentDate(i.PaymentDate).
@@ -36,6 +40,8 @@ func (s * savePaymentsUseCase) Execute(ctx context.Context, i input.CreatePaymen
 	if err != nil{
 		return err
 	}
-
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("save payment usecase finish")
 	return nil
 }

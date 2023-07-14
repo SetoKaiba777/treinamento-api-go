@@ -7,6 +7,7 @@ import (
 	"payments-go/core/domain"
 	"payments-go/core/gateway"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 )
 
 const(
@@ -29,6 +30,9 @@ func NewCheckFraudUseCase(httpClient gateway.HttpClient) CheckFraudUseCase{
 }
 
 func (c * checkFraudUseCase) Execute(ctx context.Context, i input.CreatePaymentInput) error{
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("check fraud usecase init")
 	resp := c.httpClient.Do(methodFraud,targetFraud,nil, new(bytes.Buffer))
 	if resp.Err != nil{
 		return resp.Err
@@ -53,6 +57,8 @@ func (c * checkFraudUseCase) Execute(ctx context.Context, i input.CreatePaymentI
 	if err!= nil {
 		return err
 	}
-
+	logger.WithFields(logger.Fields{"id": i.Id,"value": i.Value,
+	"status": i.Status,"paymentDate": i.PaymentDate}).
+	Infof("check fraud usecase finish")
 	return nil
 }

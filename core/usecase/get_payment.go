@@ -2,9 +2,10 @@ package usecase
 
 import (
 	"context"
-	"payments-go/core/repository"
 	"payments-go/core/domain"
+	"payments-go/core/repository"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 	"time"
 )
 
@@ -34,6 +35,7 @@ func NewGetPaymentUseCase(repository repository.PaymentsRepository) GetPaymentUs
 }
 
 func (g  *getPaymentUseCase) Execute(ctx context.Context, i input.GetPaymentInput) (GetPaymentOutput,error){
+	logger.WithFields(logger.Fields{"id": i.Id}).Infof("get payment usecase init")
 	p, err := g.repository.FindById(ctx,i.Id)
 	if err != nil{
 		return GetPaymentOutput{}, err
@@ -42,7 +44,7 @@ func (g  *getPaymentUseCase) Execute(ctx context.Context, i input.GetPaymentInpu
 	if p.Id==""{
 		return GetPaymentOutput{}, domain.ErrPaymentNotFound
 	}
-	
+	logger.WithFields(logger.Fields{"id": i.Id}).Infof("get payment usecase finish")	
 	return GetPaymentOutput{
 		Id: p.Id,
 		Value: p.Value,
