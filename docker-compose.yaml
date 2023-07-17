@@ -1,0 +1,38 @@
+version: "3.3"
+
+services:
+  localstack-payments:
+    container_name: localstack-payments
+    build:
+      context: ./_localstack
+      dockerfile: Dockerfile
+    ports:
+      - '4566:4566'
+    environment:
+      SERVICES: dynamodb
+      AWS_DEFAULT_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: 123
+      AWS_SECRET_ACCESS_KEY: 123
+      EDGE_PORT: 4566
+      AWS_DEFAULT_OUTPUT: json
+      DEBUG: 1
+      USE_SSL: 0
+    volumes:
+      - "./_localstack/aws:/root/.aws"
+      - "./_localstack:/var/lib/localstack"
+      - "./_localstack:/docker-entrypoint-initaws.d"
+
+  redis-payments:
+    container_name: redis-payment
+    image: redis:6.2.6
+    ports:
+      - "6379:6379"
+  
+  wiremock-payments:
+    container_name: wiremock-payments
+    image: duberton/wiremock:1.0
+    ports:
+      - "8882:8080"
+    volumes:
+      - "./_mocks/__files:/home/wiremock/__files"
+      - "./mocks/mappings:/home/wiremock/mappings"

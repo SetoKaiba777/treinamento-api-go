@@ -1,0 +1,14 @@
+{
+    "priority":1,
+    "request":{
+        "method": "GET",
+        "urlPathPattern": "/v1/balance"
+    },
+    "response": {
+        "fixedDelayMilliseconds": 200,
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}

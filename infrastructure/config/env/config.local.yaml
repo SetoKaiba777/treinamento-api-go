@@ -1,0 +1,15 @@
+application:
+  name: payments
+  levelLog: debug
+  server:
+    port: 8080
+    timeout: 100
+
+redis:
+  host: "localhost:6379"
+
+aws:
+  endpoint: "http://localhost:4566"
+  region: "us-east-1"
+  dynamodb:
+    tableName: Payments

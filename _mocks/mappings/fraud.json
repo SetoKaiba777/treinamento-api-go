@@ -1,0 +1,15 @@
+{
+    "priority":1,
+    "request":{
+        "method": "POST",
+        "urlPathPattern": "/v1/fraud"
+    },
+    "response": {
+        "fixedDelayMilliseconds": 200,
+        "status": 200,
+        "bodyFileName": "fraud_return.json",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
