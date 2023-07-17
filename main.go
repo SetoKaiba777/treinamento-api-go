@@ -1,6 +1,8 @@
 package main
 
-import "payments-go/infrastructure/http/server"
+import (
+	"payments-go/infrastructure/http/server"
+)
 
 func main() {
 	server.
@@ -10,6 +12,8 @@ func main() {
 		WithDB().
 		WithCache().
 		WithRepository().
+		WithHttpClient().
 		WithWebServer().
 		Start()
+
 }

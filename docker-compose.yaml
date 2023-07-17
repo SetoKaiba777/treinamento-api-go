@@ -35,4 +35,4 @@ services:
       - "8882:8080"
     volumes:
       - "./_mocks/__files:/home/wiremock/__files"
-      - "./mocks/mappings:/home/wiremock/mappings"
+      - "./_mocks/mappings:/home/wiremock/mappings"

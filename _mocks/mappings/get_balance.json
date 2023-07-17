@@ -7,6 +7,7 @@
     "response": {
         "fixedDelayMilliseconds": 200,
         "status": 200,
+        "bodyFileName": "get_balance_return.json",
         "headers": {
             "Content-Type": "application/json"
         }
