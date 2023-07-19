@@ -31,11 +31,11 @@ func (r PaymentsRepository) Save(ctx context.Context, p domain.Payment) (domain.
 
 	eg := &errgroup.Group{}
 
-	eg.Go(func() error{
+/*	eg.Go(func() error{
 		_,err := r.db.PutItem(ctx, p)
 		return err
 	})
-
+*/
 	eg.Go(func() error{
 		return r.cache.SaveCache(ctx, p.Id,string(jsonPayment))
 	})

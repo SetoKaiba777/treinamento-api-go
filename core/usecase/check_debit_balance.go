@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	targetDebitBalance = "http://localhost:8882/balance/debit"
+	targetDebitBalance = "http://localhost:8882/v1/balance/debit"
 	methodDebitBalance = http.MethodPost
 )
 

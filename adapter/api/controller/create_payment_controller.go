@@ -12,10 +12,10 @@ import (
 )
 
 type CreatePaymentController struct {
-	f facade.CreatePaymentFacade
+	f facade.PaymentFacade
 }
 
-func NewCreatePaymentController(f facade.CreatePaymentFacade) CreatePaymentController {
+func NewCreatePaymentController(f facade.PaymentFacade) CreatePaymentController {
 	return CreatePaymentController{
 		f: f,
 	}

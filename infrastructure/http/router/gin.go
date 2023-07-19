@@ -84,7 +84,7 @@ func (engine ginEngine) Listen() {
 
 func (engine ginEngine) setAppHandlers(router *gin.Engine) {
 	router.POST("/v1/payments", engine.HandlePayments())
-	router.GET(":paymentId", engine.HandleGetPayment())
+	router.GET("/v1/payments/:paymentId", engine.HandleGetPayment())
 }
 
 func (e ginEngine) HandlePayments() gin.HandlerFunc {

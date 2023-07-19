@@ -10,7 +10,11 @@ import (
 )
 
 type (
-	CreatePaymentFacade struct {
+	PaymentFacade interface{
+		Execute(ctx context.Context, i input.CreatePaymentInput) (CreatePaymentOutput, error)
+	}
+
+	createPaymentFacade struct {
 		checkBalanceUseCase usecase.CheckBalanceUseCase
 		checkFraudUseCase   usecase.CheckFraudUseCase
 		debitBalanceUseCase usecase.CheckDebitBalanceUseCase
@@ -28,8 +32,8 @@ func NewFacade(checkBalanceUseCase usecase.CheckBalanceUseCase,
 	checkFraudUseCase   usecase.CheckFraudUseCase,
 	debitBalanceUseCase usecase.CheckDebitBalanceUseCase,
 	savePaymentsUseCase usecase.SavePaymentsUseCase,
-	sendNotificationUseCase usecase.SendNotificationUseCase) CreatePaymentFacade{
-		return CreatePaymentFacade{
+	sendNotificationUseCase usecase.SendNotificationUseCase) PaymentFacade{
+		return createPaymentFacade{
 			checkBalanceUseCase: checkBalanceUseCase,
 			checkFraudUseCase: checkFraudUseCase,
 			debitBalanceUseCase : debitBalanceUseCase,
@@ -38,7 +42,7 @@ func NewFacade(checkBalanceUseCase usecase.CheckBalanceUseCase,
 		}
 	}
 
-func (f CreatePaymentFacade) Execute(ctx context.Context, i input.CreatePaymentInput) (CreatePaymentOutput, error){
+func (f createPaymentFacade) Execute(ctx context.Context, i input.CreatePaymentInput) (CreatePaymentOutput, error){
 	logger.Infof("facade init")
 	eg := &errgroup.Group{}
 

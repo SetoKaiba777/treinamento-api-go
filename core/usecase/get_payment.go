@@ -38,6 +38,7 @@ func (g  *getPaymentUseCase) Execute(ctx context.Context, i input.GetPaymentInpu
 	logger.WithFields(logger.Fields{"id": i.Id}).Infof("get payment usecase init")
 	p, err := g.repository.FindById(ctx,i.Id)
 	if err != nil{
+		logger.WithFields(logger.Fields{"Error": err}).Infof("get payment usecase init")
 		return GetPaymentOutput{}, err
 	}
 
