@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"payments-go/core/domain"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -25,6 +26,7 @@ func TestSavePaymentsUseCase(t *testing.T){
 			expectedError : errors.New("Error during action of save in repository"),
 		},
 	}
+	logger.NewZapLogger()
 	for _, scenario := range tt{
 		t.Run(scenario.name, func (t* testing.T)  {
 			fmt.Println("Scenario:",scenario.name)

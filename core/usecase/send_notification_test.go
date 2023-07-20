@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"payments-go/core/gateway"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -32,6 +33,7 @@ func TestSendNotifyUseCase(t *testing.T) {
 			expectedError: errors.New("generic error"),
 		},
 	}
+	logger.NewZapLogger()
 	for _, scenario := range tt {
 		t.Run(scenario.name, func(t *testing.T) {
 			fmt.Println("Scenario:", scenario.name)

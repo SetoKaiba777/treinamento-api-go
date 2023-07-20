@@ -5,6 +5,7 @@ import (
 	"errors"
 	"payments-go/core/domain"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 	"testing"
 	"time"
 
@@ -55,6 +56,7 @@ func TestGetPayment(t *testing.T) {
 			expectedError: errors.New("repository error"),
 		},
 	}
+	logger.NewZapLogger()
 	for _, scenario := range tt{
 		t.Run(scenario.name,func(t *testing.T) {
 			rMock := PaymentRepositoryMock{}

@@ -9,6 +9,7 @@ import (
 	"payments-go/core/domain"
 	"payments-go/core/gateway"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 	"testing"
 	"time"
 
@@ -49,6 +50,7 @@ func TestCheckBalanceUseCase(t *testing.T) {
 			expectedError: domain.ErrInsuficentBalance,
 		},
 	}
+	logger.NewZapLogger()
 	for _, scenario := range tt {
 		t.Run(scenario.name, func(t *testing.T) {
 			fmt.Println("Scenario:", scenario.name)

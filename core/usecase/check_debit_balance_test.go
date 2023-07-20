@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"payments-go/core/gateway"
 	"payments-go/core/usecase/input"
+	"payments-go/infrastructure/logger"
 	"testing"
 	"time"
 
@@ -57,6 +58,7 @@ func TestCheckDebitBalanceUseCase(t *testing.T) {
 			expectedError: errors.New("Generic client error"),
 		},
 	}
+	logger.NewZapLogger()
 	for _, scenario := range tt {
 		t.Run(scenario.name, func(t *testing.T) {
 			fmt.Println("Scenario:", scenario.name)
