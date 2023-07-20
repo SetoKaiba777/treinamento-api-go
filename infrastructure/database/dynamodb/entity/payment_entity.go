@@ -6,10 +6,10 @@ import (
 )
 
 type PaymentEntity struct {
-	Id          string
-	Value       float64
-	PaymentDate time.Time
-	Status string
+	Id          string `dynamodbav:"id"`
+	Value       float64 `dynamodbav:"value"`
+	PaymentDate time.Time `dynamodbav:"paymentDate"`
+	Status string `dynamodbav:"status"`
 }
 
 func (p PaymentEntity) PaymentEntityToPayment() domain.Payment{
